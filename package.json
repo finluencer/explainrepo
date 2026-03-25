@@ -1,0 +1,34 @@
+{
+  "name": "explainrepo",
+  "version": "1.0.0",
+  "description": "Understand any codebase instantly — map structure, trace flow, find logic",
+  "main": "bin/cli.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "keywords": [
+    "cli",
+    "codebase",
+    "developer-tools",
+    "code-search",
+    "ast",
+    "dependency-graph"
+  ],
+  "scripts": {
+    "start": "node bin/cli.js"
+  },
+  "bin": {
+    "explainrepo": "./bin/cli.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@babel/parser": "^7.29.2",
+    "@babel/traverse": "^7.29.0",
+    "commander": "^14.0.3",
+    "ignore": "^7.0.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
