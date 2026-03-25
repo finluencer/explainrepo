@@ -156,4 +156,8 @@ For any query it:
 
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE)
+
+---
+
+Made by **Finluencer**
