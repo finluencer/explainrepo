@@ -35,12 +35,14 @@ describe("parseFile", () => {
         expect(result.imports).toContain("./foo");
     });
 
-    it("parses JSX files", () => {
+    it("parses JSX files and extracts relative imports", () => {
         const result = parseFile({
             path: "a.jsx",
-            content: `import React from 'react'; const App = () => <div />;`,
+            content: `import React from 'react'; import App from './App';`,
         });
-        expect(result.imports).toContain("react");
+        // External packages ('react') are not extracted — only relative paths matter for graph
+        expect(result.imports).not.toContain("react");
+        expect(result.imports).toContain("./App");
     });
 
     it("returns empty imports for file with no imports", () => {

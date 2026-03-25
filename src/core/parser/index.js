@@ -1,43 +1,34 @@
-const parser = require("@babel/parser");
-const traverse = require("@babel/traverse").default;
+// Regex-based import extractor — no AST, no network-accessing dependencies.
+// Covers all patterns we need: ES imports, CJS require(), dynamic import().
+
+const PATTERNS = [
+    // import ... from './foo'
+    // import './foo'
+    /\bimport\s+(?:[\w*{}\s,]+\s+from\s+)?['"](\.{1,2}\/[^'"]+)['"]/g,
+    // require('./foo')  require("./foo")
+    /\brequire\s*\(\s*['"](\.{1,2}\/[^'"]+)['"]\s*\)/g,
+    // export { x } from './foo'
+    /\bfrom\s+['"](\.{1,2}\/[^'"]+)['"]/g,
+];
 
 function parseFile(file) {
-    let ast;
-    
-    try {
-        ast = parser.parse(file.content, {
-            sourceType: "unambiguous",
-            plugins: ["jsx", "typescript"],
-        });
-    } catch (err) {
-        // skip files that fail parsing
-        return {
-            file: file.path,
-            imports: [],
-        };
-    }
-    
+    const seen    = new Set();
     const imports = [];
-    
-    traverse(ast, {
-        ImportDeclaration({ node }) {
-            imports.push(node.source.value);
-        },
-        CallExpression({ node }) {
-            if (
-                node.callee.name === "require" &&
-                node.arguments.length > 0 &&
-                node.arguments[0].type === "StringLiteral"
-            ) {
-                imports.push(node.arguments[0].value);
+
+    for (const pattern of PATTERNS) {
+        // Reset lastIndex each time (patterns are defined with /g flag)
+        let match;
+        const re = new RegExp(pattern.source, pattern.flags);
+        while ((match = re.exec(file.content)) !== null) {
+            const imp = match[1];
+            if (!seen.has(imp)) {
+                seen.add(imp);
+                imports.push(imp);
             }
-        },
-    });
-    
-    return {
-        file: file.path,
-        imports,
-    };
+        }
+    }
+
+    return { file: file.path, imports };
 }
 
 module.exports = { parseFile };
