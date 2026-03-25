@@ -24,6 +24,12 @@ dist/
 build/
 out/
 
+# Test coverage
+coverage/
+
+# Editor
+.idea/
+
 # Claude Code
 .claude/
 instructions.txt

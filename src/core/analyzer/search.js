@@ -314,4 +314,4 @@ function searchFiles(graph, files, query, limit = 5) {
     return results.sort((a, b) => b.score - a.score).slice(0, limit);
 }
 
-module.exports = { searchFiles };
+module.exports = { searchFiles, normalizeStem, extractKeywords };

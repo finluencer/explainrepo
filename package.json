@@ -2,6 +2,11 @@
   "name": "explainrepo",
   "version": "1.0.0",
   "description": "Understand any codebase instantly — map structure, trace flow, find logic",
+  "author": "finluencer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/finluencer/explainrepo.git"
+  },
   "main": "bin/cli.js",
   "type": "commonjs",
   "engines": {
@@ -16,7 +21,10 @@
     "dependency-graph"
   ],
   "scripts": {
-    "start": "node bin/cli.js"
+    "start": "node bin/cli.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "bin": {
     "explainrepo": "./bin/cli.js"
@@ -29,6 +37,8 @@
     "ignore": "^7.0.5"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "@vitest/coverage-v8": "^4.1.1",
+    "nodemon": "^3.1.14",
+    "vitest": "^4.1.1"
   }
 }
