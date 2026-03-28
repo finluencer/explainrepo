@@ -156,7 +156,7 @@ For any query it:
 
 ## License
 
-MIT — see [LICENSE](LICENSE)
+MIT — see this [LICENSE](LICENSE)
 
 ---
 
